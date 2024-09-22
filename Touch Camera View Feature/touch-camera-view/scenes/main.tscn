@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://bh2lytx5mcdu0"]
+
+[ext_resource type="PackedScene" uid="uid://b7iwrk0bpgeli" path="res://scenes/player.tscn" id="1_2vcmu"]
+[ext_resource type="PackedScene" uid="uid://dtc0mjs4b7gcy" path="res://scenes/touch_camera_view.tscn" id="1_4p5nl"]
+[ext_resource type="PackedScene" uid="uid://c537ooym7k4nd" path="res://scenes/player2.tscn" id="2_ociog"]
+[ext_resource type="PackedScene" uid="uid://bflnnc4jnnlr7" path="res://scenes/ground.tscn" id="4_5su0g"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_j1y4f"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_03mvp"]
+sky_material = SubResource("ProceduralSkyMaterial_j1y4f")
+
+[sub_resource type="Environment" id="Environment_gowjb"]
+background_mode = 2
+sky = SubResource("Sky_03mvp")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_gowjb")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="TouchCameraView" parent="." instance=ExtResource("1_4p5nl")]
+
+[node name="Objects" type="Node3D" parent="."]
+
+[node name="Player" parent="Objects" instance=ExtResource("1_2vcmu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="Player2" parent="Objects" instance=ExtResource("2_ociog")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="Ground" parent="Objects" instance=ExtResource("4_5su0g")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.618136, 0)
