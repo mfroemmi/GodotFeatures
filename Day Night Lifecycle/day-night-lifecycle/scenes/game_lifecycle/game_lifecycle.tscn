@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://d168ol0a4yn07"]
+
+[ext_resource type="Script" path="res://scenes/game_lifecycle/game_lifecycle.gd" id="1_58rlp"]
+
+[sub_resource type="Animation" id="Animation_ifj6a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.0472, 2.61799, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5dxsx"]
+resource_name = "day_night_cycle"
+length = 15.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-1.0472, 2.61799, 0), Vector3(5.23599, 2.61799, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gcr6w"]
+_data = {
+"RESET": SubResource("Animation_ifj6a"),
+"day_night_cycle": SubResource("Animation_5dxsx")
+}
+
+[node name="GameLifecycle" type="Node3D" node_paths=PackedStringArray("dayNightAnimationPlayer")]
+script = ExtResource("1_58rlp")
+dayNightAnimationPlayer = NodePath("DayNightCycle")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_energy = 0.5
+shadow_enabled = true
+shadow_opacity = 0.2
+shadow_blur = 1.2
+
+[node name="DayNightCycle" type="AnimationPlayer" parent="."]
+autoplay = "day_night_cycle"
+libraries = {
+"": SubResource("AnimationLibrary_gcr6w")
+}
